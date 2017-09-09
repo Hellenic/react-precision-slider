@@ -9,6 +9,10 @@
     "arrow-parens": ["error", "as-needed"],
     "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
     "comma-dangle": "off",
+    "jsx-a11y/accessible-emoji": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "max-len": ["warn", 150],
     "react/jsx-filename-extension": "off"
   },
   "plugins": [

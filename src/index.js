@@ -14,6 +14,7 @@ class Slider extends Component {
     onChange: PropTypes.func.isRequired
   };
   static defaultProps = {
+    label: null,
     min: 0,
     max: 10,
     step: 0.1,
@@ -24,7 +25,7 @@ class Slider extends Component {
     this.state = {
       value: props.defaultValue,
       miniValue: 0
-    }
+    };
   }
   handleMiniChange(nextMini) {
     const { value, miniValue } = this.state;
@@ -38,22 +39,22 @@ class Slider extends Component {
   handleChange(value) {
     this.setState({ value });
     this.props.onChange(value);
-  };
+  }
 
   render() {
     const { value, miniValue } = this.state;
     const { defaultValue, label, step, onChange, ...rest } = this.props;
     return (
       <div>
-        <label>{label}</label>
+        <small>{label}</small>
         <header>{round(value, 4)}</header>
         <div>
-          <LoopingSlider range={step} defaultValue={0} onChange={v => this.handleMiniChange(v)} />
-          <div style={{ width: '100%', height: '5px', backgroundColor: 'rgb(105, 102, 99)' }}></div>
+          <LoopingSlider range={step} defaultValue={miniValue} onChange={v => this.handleMiniChange(v)} />
+          <div style={{ width: '100%', height: '5px', backgroundColor: 'rgb(105, 102, 99)' }} />
           <MainSlider step={step} defaultValue={value} {...rest} onChange={v => this.handleChange(v)} />
         </div>
       </div>
-    )
+    );
   }
 }
 export default Slider;

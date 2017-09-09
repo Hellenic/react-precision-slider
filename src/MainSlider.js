@@ -12,7 +12,7 @@ class MainSlider extends Component {
   };
   static defaultProps = {
     min: -0.1,
-    max:  0.1,
+    max: 0.1,
     step: 0.01,
     defaultValue: 0
   }
@@ -21,7 +21,10 @@ class MainSlider extends Component {
     this.state = {
       value: props.defaultValue,
       clientX: null
-    }
+    };
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return (nextState.value !== this.state.value);
   }
   handleMouseDown(event) {
     this.setState({
@@ -47,9 +50,6 @@ class MainSlider extends Component {
     this.onMouseMoveListener();
     this.onMouseUpListener();
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return (nextState.value !== this.state.value);
-  }
   render() {
     const { value } = this.state;
     const { min, max } = this.props;
@@ -59,7 +59,7 @@ class MainSlider extends Component {
     const style = { fontSize: '3em', cursor: 'pointer', lineHeight: 0, position: 'relative', left: `${left}%` };
     return (
       <span style={style} onMouseDown={e => this.handleMouseDown(e)}>🔼</span>
-    )
+    );
   }
 }
 export default MainSlider;

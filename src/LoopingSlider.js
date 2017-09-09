@@ -9,7 +9,7 @@ class LoopingSlider extends Component {
     onChange: PropTypes.func.isRequired
   };
   static defaultProps = {
-    range:  0.1,
+    range: 0.1,
     defaultValue: 0
   }
   constructor(props) {
@@ -17,7 +17,10 @@ class LoopingSlider extends Component {
     this.state = {
       value: props.defaultValue,
       clientX: null
-    }
+    };
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return (nextState.value !== this.state.value);
   }
   handleMouseDown(event) {
     this.setState({
@@ -45,9 +48,6 @@ class LoopingSlider extends Component {
     this.onMouseMoveListener();
     this.onMouseUpListener();
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return (nextState.value !== this.state.value);
-  }
   render() {
     const { value } = this.state;
     const { range } = this.props;
@@ -58,7 +58,7 @@ class LoopingSlider extends Component {
     const style = { fontSize: '2em', cursor: 'pointer', lineHeight: 0, position: 'relative', left: `${left}%` };
     return (
       <span style={style} onMouseDown={e => this.handleMouseDown(e)}>🔽</span>
-    )
+    );
   }
 }
 export default LoopingSlider;
