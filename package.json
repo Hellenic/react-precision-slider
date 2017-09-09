@@ -4,11 +4,10 @@
   "description": "React Slider with high accuracy and precision capabilities",
   "main": "lib/index.js",
   "author": "Hannu Kärkkäinen <hannu.karkkainen@gmail.com>",
-  "homepage": "http://fractalys.is",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Hellenic/fractalysis"
+    "url": "https://github.com/Hellenic/react-precision-slider"
   },
   "scripts": {
     "build": "babel src/ --out-dir lib --ignore spec.js",
@@ -47,5 +46,8 @@
   },
   "files": [
     "lib/"
-  ]
+  ],
+  "dependencies": {
+    "consolidated-events": "^1.1.1"
+  }
 }

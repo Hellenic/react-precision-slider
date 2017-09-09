@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import MainSlider from './MainSlider';
+import LoopingSlider from './LoopingSlider';
+import { round } from './MathUtils';
 
 class Slider extends Component {
   static propTypes = {
@@ -23,18 +26,16 @@ class Slider extends Component {
       miniValue: 0
     }
   }
-  handleMiniChange(event) {
+  handleMiniChange(nextMini) {
     const { value, miniValue } = this.state;
-    const nextMini = parseFloat(event.target.value);
-    const nextValue = (value - miniValue) + nextMini
+    const nextValue = (value - miniValue) + nextMini;
     this.setState({
       value: nextValue,
       miniValue: nextMini
     });
     this.props.onChange(nextValue);
   }
-  handleChange(event) {
-    let value = parseFloat(event.target.value);
+  handleChange(value) {
     this.setState({ value });
     this.props.onChange(value);
   };
@@ -45,10 +46,11 @@ class Slider extends Component {
     return (
       <div>
         <label>{label}</label>
-        <header>{value}</header>
+        <header>{round(value, 4)}</header>
         <div>
-          <input type="range" min={-step} max={step} step={step/100} value={miniValue} onChange={e => this.handleMiniChange(e)} />
-          <input type="range" step={step} {...rest} value={value} onChange={e => this.handleChange(e)} />
+          <LoopingSlider range={step} defaultValue={0} onChange={v => this.handleMiniChange(v)} />
+          <div style={{ width: '100%', height: '5px', backgroundColor: 'rgb(105, 102, 99)' }}></div>
+          <MainSlider step={step} defaultValue={value} {...rest} onChange={v => this.handleChange(v)} />
         </div>
       </div>
     )
