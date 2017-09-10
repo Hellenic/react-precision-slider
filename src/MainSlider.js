@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
-import { clamp } from './MathUtils';
+import { clamp, roundToStep } from './MathUtils';
 
 class MainSlider extends Component {
   static propTypes = {
@@ -20,9 +20,11 @@ class MainSlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      clientX: null,
+      directionToRight: null,
+      dragStartX: null,
       value: props.defaultValue,
-      previousValue: null,
-      clientX: null
+      previousValue: null
     };
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -31,6 +33,8 @@ class MainSlider extends Component {
   handleMouseDown(event) {
     this.setState({
       clientX: event.clientX,
+      directionToRight: null,
+      dragStartX: event.clientX,
       previousValue: this.state.value
     });
 
@@ -39,21 +43,32 @@ class MainSlider extends Component {
   handleMouseMove(event) {
     event.preventDefault();
 
-    const { clientX, previousValue } = this.state;
+    const { clientX, directionToRight } = this.state;
+    // Some variables can change throughout the drag, so let's place them aside
+    let dragStartX = this.state.dragStartX;
+    let previousValue = this.state.previousValue;
     const { min, max, step } = this.props;
-    // 1. Get the amount how much mouse moved
-    const mouseMoved = (event.clientX - clientX);
-    // 2. Calculate value for amount of mouse move based on given step
-    // TODO Would be better to use getBoundingClientRect() and base the movement to the size of the element
-    //      Alternative, we could base the movement to the screen size, allowing finer level of control
-    const valueFromMouse = (mouseMoved * step);
-    // 3. Adjust the new value based on previous value
-    const adjustedValue = (valueFromMouse + previousValue);
-    // TODO Round the value to the precision of 'step'
-    // 4. Make sure the new value is between min & max
-    const nextValue = clamp(adjustedValue, min, max);
+    // If mouse hasn't moved on X axis, no need to do anything
+    if (clientX === event.clientX) {
+      return;
+    }
 
-    this.setState({ value: nextValue });
+    // 1. Get the direction we're going to
+    const toRight = (event.clientX > clientX);
+    // 2. If direction changed, update the drag to previous position since that's where the drag changed
+    if (directionToRight === null || toRight !== directionToRight) {
+      dragStartX = clientX;
+      previousValue = this.state.value;
+      this.setState({ dragStartX, previousValue });
+    }
+    // 3. Calculate the percentage the mouse has moved
+    const percentMoved = toRight ? ((event.clientX - dragStartX) / (window.innerWidth - dragStartX)) : (event.clientX / (dragStartX - 0));
+    // 4. Calculate the new value based on the percentage
+    let nextValue = toRight ? ((max - previousValue) * percentMoved) + previousValue : (previousValue - min) * percentMoved;
+    // 5. Round to step precision
+    nextValue = roundToStep(nextValue, step);
+
+    this.setState({ value: nextValue, clientX: event.clientX, directionToRight: toRight });
     this.props.onChange(nextValue);
   }
   bindMouseEvents() {
@@ -64,6 +79,9 @@ class MainSlider extends Component {
     this.onMouseMoveListener();
     this.onMouseUpListener();
     this.setState({
+      clientX: null,
+      directionToRight: null,
+      dragStartX: null,
       previousValue: null
     });
   }
@@ -73,7 +91,7 @@ class MainSlider extends Component {
     const range = (max - min);
     // Get percentual position between min & max for the value (and subtract some offset)
     const left = ((value / range) * 100) - 1;
-    const style = { fontSize: '3em', cursor: 'pointer', lineHeight: 0, position: 'relative', left: `${left}%` };
+    const style = { fontSize: '3em', cursor: 'ew-resize', lineHeight: 0, position: 'relative', left: `${left}%` };
     return (
       <span ref={r => { this.ref = r; }} style={style} onMouseDown={e => this.handleMouseDown(e)}>🔼</span>
     );
