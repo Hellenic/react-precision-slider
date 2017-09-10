@@ -17,6 +17,7 @@ class LoopingSlider extends Component {
     super(props);
     this.state = {
       value: props.defaultValue,
+      previousValue: null,
       clientX: null
     };
   }
@@ -25,20 +26,28 @@ class LoopingSlider extends Component {
   }
   handleMouseDown(event) {
     this.setState({
-      clientX: event.clientX
+      clientX: event.clientX,
+      previousValue: this.state.value
     });
 
     this.bindMouseEvents();
   }
   handleMouseMove(event) {
-    const { clientX, value } = this.state;
+    event.preventDefault();
+
+    const { clientX, value, previousValue } = this.state;
     const { range } = this.props;
     const step = range / 100;
-    // TODO Would be better to use getBoundingClientRect() and base the movement to size of the element
-    const decelerator = 10;
+
+    // 1. Get the amount how much mouse moved
     const mouseMoved = (event.clientX - clientX);
-    const valueFromMouse = (mouseMoved * step) / decelerator;
-    const nextValue = value + valueFromMouse;
+    // 2. Calculate value for amount of mouse move based on given step
+    // TODO Would be better to use getBoundingClientRect() and base the movement to the size of the element
+    //      Alternative, we could base the movement to the screen size, allowing finer level of control
+    const valueFromMouse = (mouseMoved * step);
+    // 3. Adjust the new value based on previous value
+    const nextValue = (valueFromMouse + previousValue);
+    // TODO Currently there's no limitation and this value can go over the min / max
 
     this.setState({ value: nextValue });
     this.props.onChange(nextValue);
@@ -50,14 +59,21 @@ class LoopingSlider extends Component {
   unbindMouseEvents() {
     this.onMouseMoveListener();
     this.onMouseUpListener();
+    this.setState({
+      previousValue: null
+    });
   }
   render() {
     const { value } = this.state;
     const { range } = this.props;
     // Get the value between current min & max (actual value can be more than those, so we need to modulo)
-    const clampedValue = (value % range);
-    // Get percentual position between min & max for the clamped value
-    const left = (clampedValue / (range * 2)) * 100;
+    const remainder = (value % range);
+    // Get percentual position between min & max for the remainder
+    let left = (remainder / range) * 100;
+    // Value can go to negative, so adjust the control knob accordingly to stay on track
+    if (left < 0) {
+      left = left + 100;
+    }
     const style = { fontSize: '2em', cursor: 'pointer', lineHeight: 0, position: 'relative', left: `${left}%` };
     return (
       <span style={style} onMouseDown={e => this.handleMouseDown(e)}>🔽</span>
