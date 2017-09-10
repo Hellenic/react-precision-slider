@@ -30,6 +30,7 @@ class Slider extends Component {
   handleMiniChange(nextMini) {
     const { value, miniValue } = this.state;
     const nextValue = (value - miniValue) + nextMini;
+
     this.setState({
       value: nextValue,
       miniValue: nextMini
@@ -42,15 +43,16 @@ class Slider extends Component {
   }
 
   render() {
-    const { value, miniValue } = this.state;
+    const { boundingBox, value, miniValue } = this.state;
     const { defaultValue, label, step, onChange, ...rest } = this.props;
     return (
-      <div>
-        <small>{label}</small>
-        <header>{round(value, 4)}</header>
+      <div style={{ textAlign: 'left' }}>
+        <span>{label}</span>
+        <span style={{ marginLeft: '60%' }}>💠</span>
+        <span style={{ float: 'right', }}>{round(value, 4)}</span>
         <div>
           <LoopingSlider range={step} defaultValue={miniValue} onChange={v => this.handleMiniChange(v)} />
-          <div style={{ width: '100%', height: '5px', backgroundColor: 'rgb(105, 102, 99)' }} />
+          <div style={{ width: '100%', height: '5px', background: 'repeating-linear-gradient(to right,#f6ba52,#f6ba52 10px,#ffd180 10px,#ffd180 20px)' }} />
           <MainSlider step={step} defaultValue={value} {...rest} onChange={v => this.handleChange(v)} />
         </div>
       </div>

@@ -5,6 +5,16 @@ export function round(number, precision) {
   return roundedTempNumber / factor;
 }
 
+export function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+export function isNumeric(value) {
+  return !isNaN(parseFloat(value)) && isFinite(value);
+}
+
 export default {
-  round
+  round,
+  clamp,
+  isNumeric
 };

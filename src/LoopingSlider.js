@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
+import { clamp } from './MathUtils';
 
 class LoopingSlider extends Component {
   static propTypes = {
@@ -31,8 +32,10 @@ class LoopingSlider extends Component {
   }
   handleMouseMove(event) {
     const { clientX, value } = this.state;
-    const step = this.props.range / 100;
-    const decelerator = 10; // TODO Should this be based on screenWidth or something else?
+    const { range } = this.props;
+    const step = range / 100;
+    // TODO Would be better to use getBoundingClientRect() and base the movement to size of the element
+    const decelerator = 10;
     const mouseMoved = (event.clientX - clientX);
     const valueFromMouse = (mouseMoved * step) / decelerator;
     const nextValue = value + valueFromMouse;
