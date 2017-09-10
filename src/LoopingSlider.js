@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
-import { clamp } from './MathUtils';
 
 class LoopingSlider extends Component {
   static propTypes = {
@@ -35,7 +34,7 @@ class LoopingSlider extends Component {
   handleMouseMove(event) {
     event.preventDefault();
 
-    const { clientX, value, previousValue } = this.state;
+    const { clientX, previousValue } = this.state;
     const { range } = this.props;
     const step = range / 100;
 
@@ -72,7 +71,7 @@ class LoopingSlider extends Component {
     let left = (remainder / range) * 100;
     // Value can go to negative, so adjust the control knob accordingly to stay on track
     if (left < 0) {
-      left = left + 100;
+      left += 100;
     }
     const style = { fontSize: '2em', cursor: 'pointer', lineHeight: 0, position: 'relative', left: `${left}%` };
     return (

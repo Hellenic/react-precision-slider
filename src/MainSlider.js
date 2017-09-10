@@ -39,7 +39,7 @@ class MainSlider extends Component {
   handleMouseMove(event) {
     event.preventDefault();
 
-    const { clientX, value, previousValue } = this.state;
+    const { clientX, previousValue } = this.state;
     const { min, max, step } = this.props;
     // 1. Get the amount how much mouse moved
     const mouseMoved = (event.clientX - clientX);
@@ -75,7 +75,7 @@ class MainSlider extends Component {
     const left = ((value / range) * 100) - 1;
     const style = { fontSize: '3em', cursor: 'pointer', lineHeight: 0, position: 'relative', left: `${left}%` };
     return (
-      <span ref={r => this.ref = r } style={style} onMouseDown={e => this.handleMouseDown(e)}>🔼</span>
+      <span ref={r => { this.ref = r; }} style={style} onMouseDown={e => this.handleMouseDown(e)}>🔼</span>
     );
   }
 }

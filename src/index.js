@@ -43,7 +43,7 @@ class Slider extends Component {
   }
 
   render() {
-    const { boundingBox, value, miniValue } = this.state;
+    const { value, miniValue } = this.state;
     const { defaultValue, label, step, onChange, ...rest } = this.props;
     return (
       <div style={{ textAlign: 'left' }}>
