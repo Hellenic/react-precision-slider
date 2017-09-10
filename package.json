@@ -1,6 +1,6 @@
 {
   "name": "react-precision-slider",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React Slider with high accuracy and precision capabilities",
   "main": "lib/index.js",
   "author": "Hannu Kärkkäinen <hannu.karkkainen@gmail.com>",
