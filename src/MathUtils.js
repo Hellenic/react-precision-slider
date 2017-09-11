@@ -7,7 +7,7 @@ export function round(number, decimals) {
 
 export function roundToStep(number, precision) {
   const step = `${precision}`;
-  const decimals = step.substring(step.indexOf('.')+1, step.length).length;
+  const decimals = step.substring(step.indexOf('.') + 1, step.length).length;
   return round(number, decimals);
 }
 

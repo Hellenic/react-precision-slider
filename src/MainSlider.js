@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
-import { clamp, roundToStep } from './MathUtils';
+import { roundToStep } from './MathUtils';
 
 class MainSlider extends Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class MainSlider extends Component {
       previousValue: null
     };
   }
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return (nextProps.value !== this.props.value);
   }
   handleMouseDown(event) {
