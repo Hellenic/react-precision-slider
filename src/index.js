@@ -53,7 +53,7 @@ class Slider extends Component {
         <div>
           <LoopingSlider range={step} defaultValue={miniValue} onChange={v => this.handleMiniChange(v)} />
           <div style={{ width: '100%', height: '5px', background: 'repeating-linear-gradient(to right,#f6ba52,#f6ba52 10px,#ffd180 10px,#ffd180 20px)' }} />
-          <MainSlider step={step} defaultValue={value} {...rest} onChange={v => this.handleChange(v)} />
+          <MainSlider step={step} value={value} {...rest} onChange={v => this.handleChange(v)} />
         </div>
       </div>
     );

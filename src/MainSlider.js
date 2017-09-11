@@ -8,14 +8,14 @@ class MainSlider extends Component {
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
-    defaultValue: PropTypes.number,
+    value: PropTypes.number,
     onChange: PropTypes.func.isRequired
   };
   static defaultProps = {
     min: -0.1,
     max: 0.1,
     step: 0.01,
-    defaultValue: 0
+    value: 0
   }
   constructor(props) {
     super(props);
@@ -23,19 +23,18 @@ class MainSlider extends Component {
       clientX: null,
       directionToRight: null,
       dragStartX: null,
-      value: props.defaultValue,
       previousValue: null
     };
   }
   shouldComponentUpdate(nextProps, nextState) {
-    return (nextState.value !== this.state.value);
+    return (nextProps.value !== this.props.value);
   }
   handleMouseDown(event) {
     this.setState({
       clientX: event.clientX,
       directionToRight: null,
       dragStartX: event.clientX,
-      previousValue: this.state.value
+      previousValue: this.props.value
     });
 
     this.bindMouseEvents();
@@ -58,7 +57,7 @@ class MainSlider extends Component {
     // 2. If direction changed, update the drag to previous position since that's where the drag changed
     if (directionToRight === null || toRight !== directionToRight) {
       dragStartX = clientX;
-      previousValue = this.state.value;
+      previousValue = this.props.value;
       this.setState({ dragStartX, previousValue });
     }
     // 3. Calculate the percentage the mouse has moved
@@ -68,7 +67,7 @@ class MainSlider extends Component {
     // 5. Round to step precision
     nextValue = roundToStep(nextValue, step);
 
-    this.setState({ value: nextValue, clientX: event.clientX, directionToRight: toRight });
+    this.setState({ clientX: event.clientX, directionToRight: toRight });
     this.props.onChange(nextValue);
   }
   bindMouseEvents() {
@@ -86,8 +85,7 @@ class MainSlider extends Component {
     });
   }
   render() {
-    const { value } = this.state;
-    const { min, max } = this.props;
+    const { min, max, value } = this.props;
     const range = (max - min);
     // Get percentual position between min & max for the value (and subtract some offset)
     const left = ((value / range) * 100) - 1;
