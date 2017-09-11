@@ -27,6 +27,7 @@ class Slider extends Component {
       miniValue: 0
     };
   }
+  // TODO Refactor and get rid off separate 'miniValue'
   handleMiniChange(nextMini) {
     const { value, miniValue } = this.state;
     const nextValue = (value - miniValue) + nextMini;
@@ -39,7 +40,7 @@ class Slider extends Component {
   }
   handleChange(value) {
     this.setState({ value });
-    this.props.onChange(value);
+    this.props.onChange(value + this.state.miniValue);
   }
 
   render() {
@@ -49,7 +50,7 @@ class Slider extends Component {
       <div style={{ textAlign: 'left' }}>
         <span>{label}</span>
         <span style={{ marginLeft: '60%' }}>💠</span>
-        <span style={{ float: 'right', }}>{round(value, 4)}</span>
+        <span style={{ float: 'right', }}>{round(value + miniValue, 4)}</span>
         <div>
           <LoopingSlider range={step} defaultValue={miniValue} onChange={v => this.handleMiniChange(v)} />
           <div style={{ width: '100%', height: '5px', background: 'repeating-linear-gradient(to right,#f6ba52,#f6ba52 10px,#ffd180 10px,#ffd180 20px)' }} />
