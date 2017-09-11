@@ -37,13 +37,14 @@ class LoopingSlider extends Component {
     const { clientX, previousValue } = this.state;
     const { range } = this.props;
     const step = range / 100;
+    const decelerator = 5;
 
     // 1. Get the amount how much mouse moved
     const mouseMoved = (event.clientX - clientX);
     // 2. Calculate value for amount of mouse move based on given step
     // TODO Would be better to use getBoundingClientRect() and base the movement to the size of the element
     //      Alternative, we could base the movement to the screen size, allowing finer level of control
-    const valueFromMouse = (mouseMoved * step);
+    const valueFromMouse = (mouseMoved * step) / decelerator;
     // 3. Adjust the new value based on previous value
     const nextValue = (valueFromMouse + previousValue);
     // TODO Currently there's no limitation and this value can go over the min / max
