@@ -4,6 +4,8 @@ High-accuracy slider to control values with fine details.
 
 > Works with integers and floats
 
+![Simple preview](https://raw.githubusercontent.com/Hellenic/react-precision-slider/master/slider.png "Precision slider")
+
 ## Example usage
 
 ```jsx
