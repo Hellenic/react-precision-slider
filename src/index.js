@@ -11,6 +11,7 @@ class Slider extends Component {
     max: PropTypes.number,
     step: PropTypes.number,
     defaultValue: PropTypes.number,
+    value: PropTypes.number,
     onChange: PropTypes.func.isRequired
   };
   static defaultProps = {
@@ -32,7 +33,8 @@ class Slider extends Component {
   }
 
   render() {
-    const { value } = this.state;
+    // If 'value' prop is given, this becomes a controlled component
+    const value = this.props.value || this.state.value;
     const { defaultValue, label, step, onChange, ...rest } = this.props;
     return (
       <div style={{ textAlign: 'left' }}>
