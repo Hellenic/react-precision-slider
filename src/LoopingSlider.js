@@ -5,28 +5,26 @@ import { addEventListener } from 'consolidated-events';
 class LoopingSlider extends Component {
   static propTypes = {
     range: PropTypes.number,
-    defaultValue: PropTypes.number,
+    value: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
   };
   static defaultProps = {
-    range: 0.1,
-    defaultValue: 0
+    range: 0.1
   }
   constructor(props) {
     super(props);
     this.state = {
-      value: props.defaultValue,
       previousValue: null,
       clientX: null
     };
   }
   shouldComponentUpdate(nextProps, nextState) {
-    return (nextState.value !== this.state.value);
+    return (nextProps.value !== this.props.value);
   }
   handleMouseDown(event) {
     this.setState({
       clientX: event.clientX,
-      previousValue: this.state.value
+      previousValue: this.props.value
     });
 
     this.bindMouseEvents();
@@ -48,7 +46,6 @@ class LoopingSlider extends Component {
     // 3. Adjust the new value based on previous value
     const nextValue = (valueFromMouse + previousValue);
     // TODO Currently there's no limitation and this value can go over the min / max
-
     this.setState({ value: nextValue });
     this.props.onChange(nextValue);
   }

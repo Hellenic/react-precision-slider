@@ -21,6 +21,7 @@ class MainSlider extends Component {
     super(props);
     this.state = {
       clientX: null,
+      fraction: 0,
       directionToRight: null,
       dragStartX: null,
       previousValue: null
@@ -32,6 +33,7 @@ class MainSlider extends Component {
   handleMouseDown(event) {
     this.setState({
       clientX: event.clientX,
+      fraction: (this.props.value - roundToStep(this.props.value, this.props.step)),
       directionToRight: null,
       dragStartX: event.clientX,
       previousValue: this.props.value
@@ -64,8 +66,8 @@ class MainSlider extends Component {
     const percentMoved = toRight ? ((event.clientX - dragStartX) / (window.innerWidth - dragStartX)) : (event.clientX / (dragStartX - 0));
     // 4. Calculate the new value based on the percentage
     let nextValue = toRight ? ((max - previousValue) * percentMoved) + previousValue : (previousValue - min) * percentMoved;
-    // 5. Round to step precision
-    nextValue = roundToStep(nextValue, step);
+    // 5. Round to step precision, while keeping the value from precision slider
+    nextValue = roundToStep(nextValue, step) + this.state.fraction;
 
     this.setState({ clientX: event.clientX, directionToRight: toRight });
     this.props.onChange(nextValue);
