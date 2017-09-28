@@ -18,7 +18,7 @@ class LoopingSlider extends Component {
       clientX: null
     };
   }
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return (nextProps.value !== this.props.value);
   }
   handleMouseDown(event) {

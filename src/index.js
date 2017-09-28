@@ -19,7 +19,8 @@ class Slider extends Component {
     min: 0,
     max: 10,
     step: 0.1,
-    defaultValue: 0
+    defaultValue: 0,
+    value: null
   }
   constructor(props) {
     super(props);
