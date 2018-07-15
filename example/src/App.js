@@ -6,7 +6,7 @@ import './App.css';
 class App extends Component {
   state = {
     value: 1.0
-  }
+  };
   render() {
     return (
       <div className="App">

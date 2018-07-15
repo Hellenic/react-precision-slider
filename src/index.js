@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import MainSlider from './MainSlider';
 import LoopingSlider from './LoopingSlider';
-import { round } from './MathUtils';
+import { clamp, round } from './MathUtils';
 
 class Slider extends Component {
   static propTypes = {
@@ -41,6 +41,11 @@ class Slider extends Component {
   render() {
     // If 'value' prop is given, this becomes a controlled component
     const currentValue = this.props.value || this.state.value;
+    if (clamp(currentValue, this.props.min, this.props.max) !== currentValue) {
+      throw new Error(
+        'Given value/defaultValue should be within given min/max boundaries'
+      );
+    }
     const { defaultValue, label, step, onChange, value, ...rest } = this.props;
     return (
       <div style={{ textAlign: 'left' }}>
