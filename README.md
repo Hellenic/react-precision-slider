@@ -7,7 +7,13 @@ High-accuracy slider to control values with fine details.
 
 > Works with integers and floats
 
-![Simple preview](https://raw.githubusercontent.com/Hellenic/react-precision-slider/master/slider.png "Precision slider")
+![Simple preview](https://raw.githubusercontent.com/Hellenic/react-precision-slider/master/slider.png 'Precision slider')
+
+## TODOs
+
+- [ ] It's possible to give value / defaultValue over the min/max bounds
+- [ ] LoopingSlider does not properly respect changing props
+- [ ] Use render props (not hard-coded styling)
 
 ## Example usage
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
-import { roundToStep } from './MathUtils';
+import { clamp, roundToStep } from './MathUtils';
 
 class MainSlider extends Component {
   static propTypes = {
@@ -73,6 +73,8 @@ class MainSlider extends Component {
       : (previousValue - min) * percentMoved;
     // 5. Round to step precision, while keeping the value from precision slider
     nextValue = roundToStep(nextValue, step) + this.state.fraction;
+    // 6. If nextValue would be over min/max, clamp it
+    nextValue = clamp(nextValue, min, max);
 
     this.setState({ clientX: event.clientX, directionToRight: toRight });
     this.props.onChange(nextValue);
