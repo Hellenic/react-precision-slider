@@ -25,14 +25,19 @@ class Slider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      initialValue: props.value || props.defaultValue,
       value: props.defaultValue
     };
   }
-  handleChange(value) {
+  handleChange = value => {
     this.setState({ value });
     this.props.onChange(value);
-  }
-
+  };
+  handleReset = () => {
+    const { initialValue } = this.state;
+    this.setState({ value: initialValue });
+    this.props.onChange(initialValue);
+  };
   render() {
     // If 'value' prop is given, this becomes a controlled component
     const currentValue = this.props.value || this.state.value;
@@ -40,13 +45,18 @@ class Slider extends Component {
     return (
       <div style={{ textAlign: 'left' }}>
         <span>{label}</span>
-        <span style={{ marginLeft: '60%' }}>💠</span>
+        <span
+          style={{ marginLeft: '60%', cursor: 'pointer' }}
+          onClick={this.handleReset}
+        >
+          💠
+        </span>
         <span style={{ float: 'right' }}>{round(currentValue, 4)}</span>
         <div>
           <LoopingSlider
             range={step}
             value={currentValue}
-            onChange={v => this.handleChange(v)}
+            onChange={this.handleChange}
           />
           <div
             style={{
@@ -60,7 +70,7 @@ class Slider extends Component {
             step={step}
             value={currentValue}
             {...rest}
-            onChange={v => this.handleChange(v)}
+            onChange={this.handleChange}
           />
         </div>
       </div>
