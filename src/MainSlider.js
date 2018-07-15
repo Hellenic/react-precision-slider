@@ -16,7 +16,7 @@ class MainSlider extends Component {
     max: 0.1,
     step: 0.01,
     value: 0
-  }
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -27,13 +27,14 @@ class MainSlider extends Component {
       previousValue: null
     };
   }
-  shouldComponentUpdate(nextProps) {
-    return (nextProps.value !== this.props.value);
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.value !== this.props.value;
   }
   handleMouseDown(event) {
     this.setState({
       clientX: event.clientX,
-      fraction: (this.props.value - roundToStep(this.props.value, this.props.step)),
+      fraction:
+        this.props.value - roundToStep(this.props.value, this.props.step),
       directionToRight: null,
       dragStartX: event.clientX,
       previousValue: this.props.value
@@ -55,7 +56,7 @@ class MainSlider extends Component {
     }
 
     // 1. Get the direction we're going to
-    const toRight = (event.clientX > clientX);
+    const toRight = event.clientX > clientX;
     // 2. If direction changed, update the drag to previous position since that's where the drag changed
     if (directionToRight === null || toRight !== directionToRight) {
       dragStartX = clientX;
@@ -63,9 +64,13 @@ class MainSlider extends Component {
       this.setState({ dragStartX, previousValue });
     }
     // 3. Calculate the percentage the mouse has moved
-    const percentMoved = toRight ? ((event.clientX - dragStartX) / (window.innerWidth - dragStartX)) : (event.clientX / (dragStartX - 0));
+    const percentMoved = toRight
+      ? (event.clientX - dragStartX) / (window.innerWidth - dragStartX)
+      : event.clientX / (dragStartX - 0);
     // 4. Calculate the new value based on the percentage
-    let nextValue = toRight ? ((max - previousValue) * percentMoved) + previousValue : (previousValue - min) * percentMoved;
+    let nextValue = toRight
+      ? (max - previousValue) * percentMoved + previousValue
+      : (previousValue - min) * percentMoved;
     // 5. Round to step precision, while keeping the value from precision slider
     nextValue = roundToStep(nextValue, step) + this.state.fraction;
 
@@ -73,8 +78,12 @@ class MainSlider extends Component {
     this.props.onChange(nextValue);
   }
   bindMouseEvents() {
-    this.onMouseMoveListener = addEventListener(document, 'mousemove', e => this.handleMouseMove(e));
-    this.onMouseUpListener = addEventListener(document, 'mouseup', () => this.unbindMouseEvents());
+    this.onMouseMoveListener = addEventListener(document, 'mousemove', e =>
+      this.handleMouseMove(e)
+    );
+    this.onMouseUpListener = addEventListener(document, 'mouseup', () =>
+      this.unbindMouseEvents()
+    );
   }
   unbindMouseEvents() {
     this.onMouseMoveListener();
@@ -88,12 +97,26 @@ class MainSlider extends Component {
   }
   render() {
     const { min, max, value } = this.props;
-    const range = (max - min);
+    const range = max - min;
     // Get percentual position between min & max for the value (and subtract some offset)
-    const left = ((value / range) * 100) - 1;
-    const style = { fontSize: '3em', cursor: 'ew-resize', lineHeight: 0, position: 'relative', left: `${left}%` };
+    const left = (value / range) * 100 - 1;
+    const style = {
+      fontSize: '3em',
+      cursor: 'ew-resize',
+      lineHeight: 0,
+      position: 'relative',
+      left: `${left}%`
+    };
     return (
-      <span ref={r => { this.ref = r; }} style={style} onMouseDown={e => this.handleMouseDown(e)}>🔼</span>
+      <span
+        ref={r => {
+          this.ref = r;
+        }}
+        style={style}
+        onMouseDown={e => this.handleMouseDown(e)}
+      >
+        🔼
+      </span>
     );
   }
 }

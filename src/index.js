@@ -21,11 +21,11 @@ class Slider extends Component {
     step: 0.1,
     defaultValue: 0,
     value: null
-  }
+  };
   constructor(props) {
     super(props);
     this.state = {
-      value: props.defaultValue,
+      value: props.defaultValue
     };
   }
   handleChange(value) {
@@ -35,17 +35,33 @@ class Slider extends Component {
 
   render() {
     // If 'value' prop is given, this becomes a controlled component
-    const value = this.props.value || this.state.value;
-    const { defaultValue, label, step, onChange, ...rest } = this.props;
+    const currentValue = this.props.value || this.state.value;
+    const { defaultValue, label, step, onChange, value, ...rest } = this.props;
     return (
       <div style={{ textAlign: 'left' }}>
         <span>{label}</span>
         <span style={{ marginLeft: '60%' }}>💠</span>
-        <span style={{ float: 'right', }}>{round(value, 4)}</span>
+        <span style={{ float: 'right' }}>{round(currentValue, 4)}</span>
         <div>
-          <LoopingSlider range={step} value={value} onChange={v => this.handleChange(v)} />
-          <div style={{ width: '100%', height: '5px', background: 'repeating-linear-gradient(to right,#f6ba52,#f6ba52 10px,#ffd180 10px,#ffd180 20px)' }} />
-          <MainSlider step={step} value={value} {...rest} onChange={v => this.handleChange(v)} />
+          <LoopingSlider
+            range={step}
+            value={currentValue}
+            onChange={v => this.handleChange(v)}
+          />
+          <div
+            style={{
+              width: '100%',
+              height: '5px',
+              background:
+                'repeating-linear-gradient(to right,#f6ba52,#f6ba52 10px,#ffd180 10px,#ffd180 20px)'
+            }}
+          />
+          <MainSlider
+            step={step}
+            value={currentValue}
+            {...rest}
+            onChange={v => this.handleChange(v)}
+          />
         </div>
       </div>
     );
