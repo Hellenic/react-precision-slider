@@ -1,6 +1,6 @@
 # Precision Slider for React
 
-[![build status](https://img.shields.io/travis/Hellenic/react-precision-slider/master.svg?style=flat-square)](https://travis-ci.org/Hellenic/react-precision-slider)
+![npm version](https://img.shields.io/npm/v/react-precision-slider.svg)
 ![License](https://img.shields.io/npm/l/react-precision-slider.svg)
 
 High-accuracy slider to control floating point values with large decimals.
