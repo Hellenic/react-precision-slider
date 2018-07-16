@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
-import { clamp } from './MathUtils';
+import { clamp, roundToStep } from './MathUtils';
 
 class LoopingSlider extends Component {
   static propTypes = {
@@ -51,7 +51,6 @@ class LoopingSlider extends Component {
     // 4. If nextValue would be over min/max, clamp it
     nextValue = clamp(nextValue, min, max);
 
-    this.setState({ value: nextValue });
     this.props.onChange(nextValue);
   }
   bindMouseEvents() {
@@ -70,9 +69,9 @@ class LoopingSlider extends Component {
     });
   }
   render() {
-    const { value } = this.state;
-    const { range } = this.props;
-    // Get the value between current min & max (actual value can be more than those, so we need to modulo)
+    // const { value } = this.state;
+    const { range, value } = this.props;
+    // Get the value between the current range
     const remainder = value % range;
     // Get percentual position between min & max for the remainder
     let left = (remainder / range) * 100;

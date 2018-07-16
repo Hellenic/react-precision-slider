@@ -15,7 +15,7 @@ class App extends Component {
           <h2>react-precision-slider</h2>
         </div>
         <div className="big-slider">
-          <h3>Wide slider (uncontrolled)</h3>
+          <h3>Uncontrolled slider</h3>
           <Slider
             label="Scale"
             min={0}
@@ -26,7 +26,7 @@ class App extends Component {
           />
         </div>
         <div className="small-slider">
-          <h3>Narrow slider (controlled)</h3>
+          <h3>Controlled slider</h3>
           <Slider
             label="Power"
             min={0}

@@ -12,7 +12,7 @@ class Slider extends Component {
     step: PropTypes.number,
     defaultValue: PropTypes.number,
     value: PropTypes.number,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func
   };
   static defaultProps = {
     label: null,
@@ -20,7 +20,8 @@ class Slider extends Component {
     max: 10,
     step: 0.1,
     defaultValue: 0,
-    value: null
+    value: null,
+    onChange: () => {}
   };
   constructor(props) {
     super(props);
