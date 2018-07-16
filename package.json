@@ -1,6 +1,6 @@
 {
   "name": "react-precision-slider",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "React Slider with high accuracy and precision capabilities",
   "main": "lib/index.js",
   "author": "Hannu Kärkkäinen <hannu.karkkainen@gmail.com>",
@@ -40,9 +40,14 @@
     "react-test-renderer": "^16.4.1"
   },
   "jest": {
-    "moduleDirectories": ["src", "node_modules"]
+    "moduleDirectories": [
+      "src",
+      "node_modules"
+    ]
   },
-  "files": ["lib/"],
+  "files": [
+    "lib/"
+  ],
   "dependencies": {
     "consolidated-events": "^2.0.2"
   }
