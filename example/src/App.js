@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Slider from 'react-precision-slider';
 import logo from './logo.svg';
 import './App.css';
+import './react-precision-slider.css';
 
 class App extends Component {
   state = {

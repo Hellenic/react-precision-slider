@@ -80,14 +80,16 @@ class LoopingSlider extends Component {
       left += 100;
     }
     const style = {
-      fontSize: '2em',
       cursor: 'ew-resize',
-      lineHeight: 0,
       position: 'relative',
       left: `${left}%`
     };
     return (
-      <span style={style} onMouseDown={e => this.handleMouseDown(e)}>
+      <span
+        style={style}
+        className="rpc-precision-slider"
+        onMouseDown={e => this.handleMouseDown(e)}
+      >
         🔽
       </span>
     );

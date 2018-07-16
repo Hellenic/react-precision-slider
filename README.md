@@ -7,11 +7,25 @@ High-accuracy slider to control floating point values with large decimals.
 
 ![Simple preview](https://raw.githubusercontent.com/Hellenic/react-precision-slider/master/slider.png 'Precision slider')
 
+## Note
+
+This currently works for my use-case and thus might not be developed any further.
+
 ## Example usage
 
 ```jsx
-<Slider label="Scale" min={0} max={10} step={0.1} defaultValue={defaultValue} />
+<Slider
+  label="Nice slider"
+  min={0}
+  max={10}
+  step={0.1}
+  defaultValue={defaultValue}
+/>
 ```
 
 Alternatively you can pass `value` and `onChange` props instead of `defaultValue`
-to make it controlled. See the example.
+to make it controlled.
+
+You'll also need to pass in some styles (currently with basic CSS classes).
+
+See the example for both of the above.

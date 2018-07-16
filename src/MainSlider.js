@@ -102,9 +102,7 @@ class MainSlider extends Component {
     // Get percentual position between min & max for the value (and subtract some offset)
     const left = (value / range) * 100 - 1;
     const style = {
-      fontSize: '3em',
       cursor: 'ew-resize',
-      lineHeight: 0,
       position: 'relative',
       left: `${left}%`
     };
@@ -114,6 +112,7 @@ class MainSlider extends Component {
           this.ref = r;
         }}
         style={style}
+        className="rpc-main-slider"
         onMouseDown={e => this.handleMouseDown(e)}
       >
         🔼

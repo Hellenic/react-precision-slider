@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import MainSlider from './MainSlider';
+import Value from './Value';
+import ValueBar from './ValueBar';
+import Reset from './Reset';
 import LoopingSlider from './LoopingSlider';
 import { clamp, round } from './MathUtils';
 
 class Slider extends Component {
   static propTypes = {
-    label: PropTypes.string,
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
@@ -15,7 +17,6 @@ class Slider extends Component {
     onChange: PropTypes.func
   };
   static defaultProps = {
-    label: null,
     min: 0,
     max: 10,
     step: 0.1,
@@ -47,17 +48,11 @@ class Slider extends Component {
         'Given value/defaultValue should be within given min/max boundaries'
       );
     }
-    const { defaultValue, label, step, onChange, value, ...rest } = this.props;
+    const { defaultValue, step, onChange, value, ...rest } = this.props;
     return (
-      <div style={{ textAlign: 'left' }}>
-        <span>{label}</span>
-        <span
-          style={{ marginLeft: '60%', cursor: 'pointer' }}
-          onClick={this.handleReset}
-        >
-          💠
-        </span>
-        <span style={{ float: 'right' }}>{round(currentValue, 4)}</span>
+      <div className="react-precision-slider">
+        <Reset onClick={this.handleReset} />
+        <Value value={round(currentValue, 4)} />
         <div>
           <LoopingSlider
             range={step}
@@ -65,14 +60,7 @@ class Slider extends Component {
             onChange={this.handleChange}
             {...rest}
           />
-          <div
-            style={{
-              width: '100%',
-              height: '5px',
-              background:
-                'repeating-linear-gradient(to right,#f6ba52,#f6ba52 10px,#ffd180 10px,#ffd180 20px)'
-            }}
-          />
+          <ValueBar />
           <MainSlider
             step={step}
             value={currentValue}
