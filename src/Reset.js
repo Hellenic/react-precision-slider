@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const Reset = props => (
@@ -5,5 +6,9 @@ const Reset = props => (
     💠
   </span>
 );
+
+Reset.propTypes = {
+  onClick: PropTypes.func.isRequired
+};
 
 export default Reset;

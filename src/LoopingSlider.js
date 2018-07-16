@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
-import { clamp, roundToStep } from './MathUtils';
+import { clamp } from './MathUtils';
 
 class LoopingSlider extends Component {
   static propTypes = {

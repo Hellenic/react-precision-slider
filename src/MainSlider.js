@@ -7,7 +7,6 @@ class MainSlider extends Component {
   static propTypes = {
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
-    max: PropTypes.number,
     step: PropTypes.number,
     value: PropTypes.number,
     onChange: PropTypes.func.isRequired
@@ -26,7 +25,7 @@ class MainSlider extends Component {
       previousValue: null
     };
   }
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return nextProps.value !== this.props.value;
   }
   handleMouseDown(event) {
