@@ -5,15 +5,14 @@ import { clamp, roundToStep } from './MathUtils';
 
 class MainSlider extends Component {
   static propTypes = {
-    min: PropTypes.number,
+    min: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
     max: PropTypes.number,
     step: PropTypes.number,
     value: PropTypes.number,
     onChange: PropTypes.func.isRequired
   };
   static defaultProps = {
-    min: -0.1,
-    max: 0.1,
     step: 0.01,
     value: 0
   };

@@ -62,6 +62,7 @@ class Slider extends Component {
             range={step}
             value={currentValue}
             onChange={this.handleChange}
+            {...rest}
           />
           <div
             style={{

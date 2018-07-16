@@ -11,7 +11,6 @@ High-accuracy slider to control values with fine details.
 
 ## TODOs
 
-- [ ] It's possible to give value / defaultValue over the min/max bounds
 - [ ] LoopingSlider does not properly respect changing props
 - [ ] Use render props (not hard-coded styling)
 
