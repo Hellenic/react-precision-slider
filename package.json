@@ -13,8 +13,7 @@
     "build": "babel src/ --out-dir lib --ignore spec.js",
     "test:watch": "jest --watch --coverage src/",
     "test": "jest --coverage src/",
-    "lint": "eslint -c .eslintrc src/",
-    "prepublishOnly": "npm run lint"
+    "lint": "eslint -c .eslintrc src/"
   },
   "peerDependencies": {
     "react": "^16.4.1",
