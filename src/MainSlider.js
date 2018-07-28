@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { addEventListener } from 'consolidated-events';
-import { clamp, roundToStep } from './MathUtils';
+import { clamp, roundToStep, getPercentBetween } from './MathUtils';
 
 class MainSlider extends Component {
   static propTypes = {
@@ -63,12 +63,14 @@ class MainSlider extends Component {
     }
     // 3. Calculate the percentage the mouse has moved
     const percentMoved = toRight
-      ? (event.clientX - dragStartX) / (window.innerWidth - dragStartX)
-      : event.clientX / (dragStartX - 0);
+      ? (event.screenX - dragStartX) / (screen.availWidth - dragStartX)
+      : event.screenX / (dragStartX - 0);
+
     // 4. Calculate the new value based on the percentage
     let nextValue = toRight
-      ? (max - previousValue) * percentMoved + previousValue
-      : (previousValue - min) * percentMoved;
+      ? (max - min - previousValue) * percentMoved + previousValue
+      : (previousValue - min) * percentMoved + (0 + min);
+
     // 5. Round to step precision, while keeping the value from precision slider
     nextValue = roundToStep(nextValue, step) + this.state.fraction;
     // 6. If nextValue would be over min/max, clamp it
@@ -97,9 +99,9 @@ class MainSlider extends Component {
   }
   render() {
     const { min, max, value } = this.props;
-    const range = max - min;
     // Get percentual position between min & max for the value (and subtract some offset)
-    const left = (value / range) * 100 - 1;
+    const left = getPercentBetween(value, min, max);
+
     const style = {
       cursor: 'ew-resize',
       position: 'relative',

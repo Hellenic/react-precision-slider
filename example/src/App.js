@@ -30,9 +30,9 @@ class App extends Component {
           <h3>Controlled slider</h3>
           <Slider
             label="Power"
-            min={0}
+            min={-10}
             max={10}
-            step={0.01}
+            step={0.05}
             value={this.state.value}
             onChange={value => this.setState({ value })}
           />
