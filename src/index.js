@@ -42,9 +42,9 @@ class Slider extends Component {
   };
   render() {
     // If 'value' prop is given, this becomes a controlled component
-    const value = this.props.value || this.state.value;
-    const currentValue = clamp(value, this.props.min, this.props.max)
-    if correctedValue(currentValue !== value) {
+    const initialValue = this.props.value || this.state.value;
+    const currentValue = clamp(initialValue, this.props.min, this.props.max);
+    if (correctedValue(currentValue !== initialValue)) {
       console.warn(
         'Given value/defaultValue should be within given min/max boundaries'
       );
