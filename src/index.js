@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import MainSlider from './MainSlider';
 import Value from './Value';
 import ValueBar from './ValueBar';
+import Label from './Label';
 import Reset from './Reset';
 import LoopingSlider from './LoopingSlider';
 import { clamp, round } from './MathUtils';
@@ -14,6 +15,7 @@ class Slider extends Component {
     step: PropTypes.number,
     defaultValue: PropTypes.number,
     value: PropTypes.number,
+    label: PropTypes.string,
     onChange: PropTypes.func,
     icons: PropTypes.shape({
       main: PropTypes.any,
@@ -27,6 +29,7 @@ class Slider extends Component {
     step: 0.1,
     defaultValue: 0,
     value: null,
+    label: null,
     onChange: () => {},
     icons: {
       main: '↑',
@@ -59,11 +62,14 @@ class Slider extends Component {
         'Given value/defaultValue should be within given min/max boundaries'
       );
     }
-    const { defaultValue, step, onChange, value, ...rest } = this.props;
+    const { defaultValue, step, onChange, value, label, ...rest } = this.props;
     return (
       <div className="react-precision-slider">
-        <Reset onClick={this.handleReset} icon={this.props.icons.reset} />
-        <Value value={round(currentValue, 4)} />
+        <div>
+          <Reset onClick={this.handleReset} icon={this.props.icons.reset} />
+          {label && <Label label={label} />}
+          <Value value={round(currentValue, 4)} />
+        </div>
         <div>
           <LoopingSlider
             range={step}
