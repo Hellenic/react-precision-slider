@@ -14,13 +14,20 @@ This currently works for my use-case and thus might not be developed any further
 ## Example usage
 
 ```jsx
+const SLIDER_ICONS = {
+  main: '↑',
+  secondary: '↓',
+  reset: '↺'
+};
+
 <Slider
   label="Nice slider"
   min={0}
   max={10}
   step={0.1}
+  icons={SLIDER_ICONS} // optional
   defaultValue={defaultValue}
-/>
+/>;
 ```
 
 Alternatively you can pass `value` and `onChange` props instead of `defaultValue`
