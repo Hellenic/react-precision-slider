@@ -9,7 +9,8 @@ class LoopingSlider extends Component {
     max: PropTypes.number.isRequired,
     range: PropTypes.number,
     value: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    icons: PropTypes.object
   };
   static defaultProps = {
     range: 0.1
@@ -70,7 +71,7 @@ class LoopingSlider extends Component {
   }
   render() {
     // const { value } = this.state;
-    const { range, value } = this.props;
+    const { range, value, icons } = this.props;
     // Get the value between the current range
     const remainder = value % range;
     // Get percentual position between min & max for the remainder
@@ -90,7 +91,7 @@ class LoopingSlider extends Component {
         className="rpc-precision-slider"
         onMouseDown={e => this.handleMouseDown(e)}
       >
-        🔽
+        {icons.secondary}
       </span>
     );
   }

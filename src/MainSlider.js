@@ -9,7 +9,8 @@ class MainSlider extends Component {
     max: PropTypes.number.isRequired,
     step: PropTypes.number,
     value: PropTypes.number,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    icons: PropTypes.object
   };
   static defaultProps = {
     step: 0.01,
@@ -98,7 +99,7 @@ class MainSlider extends Component {
     });
   }
   render() {
-    const { min, max, value } = this.props;
+    const { min, max, value, icons } = this.props;
     // Get percentual position between min & max for the value (and subtract some offset)
     const left = getPercentBetween(value, min, max);
 
@@ -116,7 +117,7 @@ class MainSlider extends Component {
         className="rpc-main-slider"
         onMouseDown={e => this.handleMouseDown(e)}
       >
-        🔼
+        {icons.main}
       </span>
     );
   }

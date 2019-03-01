@@ -14,7 +14,12 @@ class Slider extends Component {
     step: PropTypes.number,
     defaultValue: PropTypes.number,
     value: PropTypes.number,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    icons: PropTypes.shape({
+      main: PropTypes.any,
+      secondary: PropTypes.any,
+      reset: PropTypes.any
+    })
   };
   static defaultProps = {
     min: 0,
@@ -22,7 +27,12 @@ class Slider extends Component {
     step: 0.1,
     defaultValue: 0,
     value: null,
-    onChange: () => {}
+    onChange: () => {},
+    icons: {
+      main: '↑',
+      secondary: '↓',
+      reset: '↺'
+    }
   };
   constructor(props) {
     super(props);
@@ -44,7 +54,7 @@ class Slider extends Component {
     // If 'value' prop is given, this becomes a controlled component
     const initialValue = this.props.value || this.state.value;
     const currentValue = clamp(initialValue, this.props.min, this.props.max);
-    if (correctedValue(currentValue !== initialValue)) {
+    if (currentValue !== initialValue) {
       console.warn(
         'Given value/defaultValue should be within given min/max boundaries'
       );
@@ -52,7 +62,7 @@ class Slider extends Component {
     const { defaultValue, step, onChange, value, ...rest } = this.props;
     return (
       <div className="react-precision-slider">
-        <Reset onClick={this.handleReset} />
+        <Reset onClick={this.handleReset} icon={this.props.icons.reset} />
         <Value value={round(currentValue, 4)} />
         <div>
           <LoopingSlider
